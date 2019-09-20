@@ -14,11 +14,11 @@ type Streamer struct{}
 // Server side stream
 func (e *Streamer) ServerStream(ctx context.Context, req *proto.Request, stream proto.Streamer_ServerStreamStream) error {
 	log.Printf("Got gklgk msg %v", req.Count)
-	// for i := 0; i < int(req.Count); i++ {
-	if err := stream.Send(&proto.Response{Count: req.Count}); err != nil {
-		return err
+	for i := 0; i < int(40); i++ {
+		if err := stream.Send(&proto.Response{Count: req.Count}); err != nil {
+			return err
+		}
 	}
-	// }
 	return nil
 }
 

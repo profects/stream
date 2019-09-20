@@ -19,14 +19,14 @@ func serverStream(cl proto.StreamerService, streamIndex int64) {
 
 	// server side stream
 	// receive messages for a 10 count
-	// for j := 0; j < 1; j++ {
-	rsp, err := stream.Recv()
-	if err != nil {
-		fmt.Println("recv err", err)
-		return
+	for j := 0; j < 40; j++ {
+		rsp, err := stream.Recv()
+		if err != nil {
+			fmt.Println("recv err", err)
+			return
+		}
+		fmt.Printf("got msg %v => %v\n", j, rsp.Count)
 	}
-	fmt.Printf("got msg %v\n", rsp.Count)
-	// }
 
 	// close the stream
 	if err := stream.Close(); err != nil {
