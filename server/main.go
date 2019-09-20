@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"io"
 	"log"
 
 	proto "github.com/micro/examples/stream/server/proto"
@@ -13,9 +12,9 @@ type Streamer struct{}
 
 // Server side stream
 func (e *Streamer) ServerStream(ctx context.Context, req *proto.Request, stream proto.Streamer_ServerStreamStream) error {
-	log.Printf("Got gklgk msg %v", req.Count)
-	for i := 0; i < int(40); i++ {
-		if err := stream.Send(&proto.Response{Count: req.Count}); err != nil {
+	log.Printf("Got msg %d", req.Count)
+	for i := 0; i < int(req.Count); i++ {
+		if err := stream.Send(&proto.Response{Count: int64(i)}); err != nil {
 			return err
 		}
 	}
@@ -24,19 +23,7 @@ func (e *Streamer) ServerStream(ctx context.Context, req *proto.Request, stream 
 
 // Bidirectional stream
 func (e *Streamer) Stream(ctx context.Context, stream proto.Streamer_StreamStream) error {
-	for {
-		req, err := stream.Recv()
-		if err == io.EOF {
-			return nil
-		}
-		if err != nil {
-			return err
-		}
-		log.Printf("Got msg %v", req.Count)
-		if err := stream.Send(&proto.Response{Count: req.Count}); err != nil {
-			return err
-		}
-	}
+	return nil
 }
 
 func main() {
