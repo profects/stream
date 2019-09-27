@@ -18,6 +18,8 @@ replace github.com/go-log/log => github.com/go-log/log v0.1.1-0.20181211034820-a
 replace github.com/marten-seemann/qtls => github.com/marten-seemann/qtls v0.3.3
 
 require (
+	git.profects.com/profects/utils v0.0.0-20190925182108-927da179c34e
+	github.com/gogo/protobuf v1.3.0
 	github.com/golang/protobuf v1.3.2
 	github.com/gorilla/websocket v1.4.1
 	github.com/micro/examples v0.2.0
