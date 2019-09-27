@@ -1,14 +1,17 @@
 syntax = "proto3";
 
 service Streamer {
-	rpc Stream(stream Request) returns (stream Response) {}
+	rpc RequestStream(stream Request) returns (stream Response) {}
 	rpc ServerStream(Request) returns (stream Response) {}
+	rpc RequestAndServerStream(stream Request) returns (stream Response) {}
 }
 
 message Request {
-	int64 count = 1;
+	int64 streamIndex = 1;
+	bool isLast = 2;
 }
 
 message Response {
-	int64 count = 1;
+	int64 streamIndex = 1;
+	bool isLast = 2;
 }
