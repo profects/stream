@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	proto "github.com/micro/examples/stream/server/proto"
@@ -12,11 +13,12 @@ type Streamer struct{}
 
 // Server side stream
 func (e *Streamer) ServerStream(ctx context.Context, req *proto.Request, stream proto.Streamer_ServerStreamStream) error {
-	log.Printf("Got msg %d", req.Count)
+	// log.Printf("Got msg %d", req.Count)
 	for i := 0; i < int(req.Count); i++ {
 		if err := stream.Send(&proto.Response{Count: int64(i)}); err != nil {
 			return err
 		}
+		return errors.New("ERROR")
 	}
 	return nil
 }
