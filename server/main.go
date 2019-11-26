@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"log"
+	"runtime"
+	"time"
 
 	proto "github.com/micro/examples/stream/server/proto"
 	"github.com/micro/go-micro"
@@ -28,6 +30,13 @@ func (e *Streamer) Stream(ctx context.Context, stream proto.Streamer_StreamStrea
 	return nil
 }
 
+func tick() {
+	ticker := time.NewTicker(1 * time.Second)
+	for _ = range ticker.C {
+		log.Println("Amount of goroutines: ", runtime.NumGoroutine())
+	}
+}
+
 func main() {
 	// new service
 	service := micro.NewService(
@@ -39,6 +48,8 @@ func main() {
 
 	// Register Handler
 	proto.RegisterStreamerHandler(service.Server(), new(Streamer))
+
+	go tick()
 
 	// Run service
 	if err := service.Run(); err != nil {
