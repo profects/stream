@@ -6,7 +6,6 @@ This is an example of a streaming service and two clients, a streaming rpc clien
 
 - server - is the service
 - client - is the rpc client
-- web - is the websocket client
 
 ## Run the example
 
